@@ -2,8 +2,7 @@
 
 import { useEffect } from "react";
 import { useMiniApp } from "@neynar/react";
-import { Header } from "~/components/ui/Header";
-import { Footer } from "~/components/ui/Footer";
+// Removed Header and Footer for a clean, focused mobile UI
 import { HomeTab, ActionsTab, ContextTab, WalletTab } from "~/components/ui/tabs";
 import { USE_WALLET } from "~/lib/constants";
 import { useNeynarUser } from "../hooks/useNeynarUser";
@@ -42,7 +41,7 @@ export interface AppProps {
  * - Loading states for async operations
  * 
  * @param props - Component props
- * @param props.title - Optional title for the mini app (defaults to "Neynar Starter Kit")
+ * @param props.title - Optional title for the mini app (defaults to "Maxxit Signals")
  * 
  * @example
  * ```tsx
@@ -50,7 +49,7 @@ export interface AppProps {
  * ```
  */
 export default function App(
-  { title }: AppProps = { title: "Neynar Starter Kit" }
+  { title }: AppProps = { title: "Maxxit Signals" }
 ) {
   // --- Hooks ---
   const {
@@ -81,10 +80,10 @@ export default function App(
   // --- Early Returns ---
   if (!isSDKLoaded) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="text-center">
-          <div className="spinner h-8 w-8 mx-auto mb-4"></div>
-          <p>Loading SDK...</p>
+      <div className="flex items-center justify-center h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700">
+        <div className="text-center animate-fade-in-up">
+          <div className="spinner h-12 w-12 mx-auto mb-6 animate-pulse-glow"></div>
+          <p className="text-gray-300 text-lg font-medium">Loading Maxxit Signals...</p>
         </div>
       </div>
     );
@@ -93,6 +92,7 @@ export default function App(
   // --- Render ---
   return (
     <div
+      className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700"
       style={{
         paddingTop: context?.client.safeAreaInsets?.top ?? 0,
         paddingBottom: context?.client.safeAreaInsets?.bottom ?? 0,
@@ -100,22 +100,30 @@ export default function App(
         paddingRight: context?.client.safeAreaInsets?.right ?? 0,
       }}
     >
-      {/* Header should be full width */}
-      <Header neynarUser={neynarUser} />
+      {/* Fixed Header */}
+      <div className="sticky top-0 z-50 bg-gray-900/95 backdrop-blur-md border-b border-blue-500/30">
+        <div className="container py-4">
+          <div className="flex items-center justify-center">
+            <div className="flex items-center space-x-3">
+              {/* <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-blue-400 flex items-center justify-center">
+                <span className="text-lg">📊</span>
+              </div> */}
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-200 via-blue-400 to-blue-300 bg-clip-text text-transparent">
+                Maxxit Signals
+              </h1>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      {/* Main content and footer should be centered */}
-      <div className="container py-2 pb-20">
-        {/* Main title */}
-        <h1 className="text-2xl font-bold text-center mb-4">{title}</h1>
-
+      <div className="container py-6">
         {/* Tab content rendering */}
-        {currentTab === Tab.Home && <HomeTab />}
-        {currentTab === Tab.Actions && <ActionsTab />}
-        {currentTab === Tab.Context && <ContextTab />}
-        {currentTab === Tab.Wallet && <WalletTab />}
-
-        {/* Footer with navigation */}
-        <Footer activeTab={currentTab as Tab} setActiveTab={setActiveTab} showWallet={USE_WALLET} />
+        <div className="animate-fade-in-up">
+          {currentTab === Tab.Home && <HomeTab />}
+          {currentTab === Tab.Actions && <ActionsTab />}
+          {currentTab === Tab.Context && <ContextTab />}
+          {currentTab === Tab.Wallet && <WalletTab />}
+        </div>
       </div>
     </div>
   );

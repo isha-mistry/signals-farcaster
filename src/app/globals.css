@@ -25,21 +25,23 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0f;
+  --foreground: #f9fafb;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0a0a0f;
+    --foreground: #f9fafb;
   }
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: 'Inter', Helvetica, Arial, sans-serif;
+  font-family: "Inter", Helvetica, Arial, sans-serif;
+  background: linear-gradient(135deg, #0a0a0f 0%, #111827 50%, #1f2937 100%);
+  min-height: 100vh;
 }
 
 * {
@@ -62,57 +64,114 @@ body {
   .container {
     @apply mx-auto max-w-md px-4;
   }
-  
+
   .container-wide {
     @apply mx-auto max-w-lg px-4;
   }
-  
+
   .container-narrow {
     @apply mx-auto max-w-sm px-4;
   }
 
-  /* Global card styles */
+  /* Enhanced global card styles */
   .card {
-    @apply bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm;
+    @apply bg-gray-900/80 backdrop-blur-md rounded-2xl border border-blue-500/30 shadow-2xl;
+    background: linear-gradient(
+      135deg,
+      rgba(17, 24, 39, 0.9) 0%,
+      rgba(31, 41, 55, 0.8) 100%
+    );
   }
-  
+
   .card-primary {
-    @apply bg-primary/10 border-primary/20;
+    @apply bg-blue-500/10 border-blue-500/30 shadow-lg;
+    background: linear-gradient(
+      135deg,
+      rgba(14, 165, 233, 0.1) 0%,
+      rgba(56, 189, 248, 0.05) 100%
+    );
   }
 
-  /* Global button styles */
+  /* Enhanced global button styles */
   .btn {
-    @apply inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none;
+    @apply inline-flex items-center justify-center rounded-xl px-6 py-3 text-sm font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none;
   }
-  
+
   .btn-primary {
-    @apply bg-primary text-white hover:bg-primary-dark focus:ring-primary;
+    @apply bg-blue-500 text-white hover:bg-blue-600 focus:ring-blue-500 transform hover:scale-105 active:scale-95;
+    background: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%);
+    box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
   }
-  
+
   .btn-secondary {
-    @apply bg-secondary text-gray-900 hover:bg-gray-200 focus:ring-gray-500 dark:bg-secondary-dark dark:text-gray-100 dark:hover:bg-gray-600;
+    @apply bg-gray-800 text-gray-100 hover:bg-gray-700 focus:ring-blue-500 border border-gray-600;
+    background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
   }
-  
+
   .btn-outline {
-    @apply border border-gray-300 bg-transparent hover:bg-gray-50 focus:ring-gray-500 dark:border-gray-600 dark:hover:bg-gray-800;
+    @apply border border-blue-500 bg-transparent hover:bg-blue-500/10 focus:ring-blue-500 text-gray-100;
   }
 
-  /* Global input styles */
+  /* Enhanced global input styles */
   .input {
-    @apply block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 placeholder-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-400;
+    @apply block w-full rounded-xl border border-gray-600 bg-gray-800 px-4 py-3 text-gray-100 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-200;
+    background: linear-gradient(
+      135deg,
+      rgba(17, 24, 39, 0.8) 0%,
+      rgba(31, 41, 55, 0.6) 100%
+    );
   }
 
-  /* Global loading spinner */
+  /* Enhanced global loading spinner */
   .spinner {
-    @apply animate-spin rounded-full border-2 border-gray-300 border-t-primary;
+    @apply animate-spin rounded-full border-2 border-gray-600 border-t-blue-500;
   }
-  
+
   .spinner-primary {
     @apply animate-spin rounded-full border-2 border-white border-t-transparent;
   }
 
-  /* Global focus styles */
+  /* Enhanced global focus styles */
   .focus-ring {
-    @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+    @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900;
+  }
+
+  /* Premium trading app specific styles */
+  .signal-card {
+    @apply bg-gray-900/90 backdrop-blur-md rounded-2xl border border-blue-500/30 shadow-2xl overflow-hidden;
+    background: linear-gradient(
+      135deg,
+      rgba(17, 24, 39, 0.95) 0%,
+      rgba(31, 41, 55, 0.9) 100%
+    );
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(14, 165, 233, 0.1);
+  }
+
+  .signal-badge {
+    @apply px-3 py-1.5 text-xs font-bold rounded-full border transition-all duration-300;
+  }
+
+  .signal-badge.buy {
+    @apply bg-green-500/20 text-green-400 border-green-500/30;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+  }
+
+  .signal-badge.sell {
+    @apply bg-red-500/20 text-red-400 border-red-500/30;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+  }
+
+  .metric-box {
+    @apply rounded-xl border border-gray-700 p-4 transition-all duration-300 hover:scale-105;
+    background: linear-gradient(
+      135deg,
+      rgba(17, 24, 39, 0.6) 0%,
+      rgba(31, 41, 55, 0.4) 100%
+    );
+  }
+
+  .metric-box:hover {
+    border-color: rgba(14, 165, 233, 0.4);
+    box-shadow: 0 0 20px rgba(14, 165, 233, 0.1);
   }
 }
