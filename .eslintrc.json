@@ -22,6 +22,7 @@
 
     // Make display name warnings instead of errors for dynamic components
     "react/display-name": "warn",
+    "react/no-unescaped-entities": "off",
 
     // Allow module assignment for dynamic imports
     "@next/next/no-assign-module-variable": "warn",

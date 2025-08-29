@@ -55,11 +55,10 @@ function CopyButton({ text, label = "Copy", className = "" }: CopyButtonProps) {
   return (
     <button
       onClick={handleCopy}
-      className={`inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium transition-all duration-200 ${
-        copied
+      className={`inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium transition-all duration-200 ${copied
           ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400'
           : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
-      } ${className}`}
+        } ${className}`}
     >
       {copied ? (
         <>
@@ -241,12 +240,12 @@ function classNames(...classes: Array<string | false | undefined>): string {
 }
 
 // Error Display Component
-function ErrorDisplay({ 
-  error, 
-  onClose, 
-  onRetryWorkaround 
-}: { 
-  error: string; 
+function ErrorDisplay({
+  error,
+  onClose,
+  onRetryWorkaround
+}: {
+  error: string;
   onClose: () => void;
   onRetryWorkaround?: () => void;
 }) {
@@ -276,7 +275,7 @@ function ErrorDisplay({
               <div className="mt-4 space-y-3">
                 <div className="p-3 bg-blue-50/50 dark:bg-blue-900/20 rounded-lg border border-blue-200/50 dark:border-blue-700/50">
                   <p className="text-xs text-blue-700 dark:text-blue-300">
-                    💡 <strong>Technical Details:</strong> The backend is treating USDC (6 decimals) as if it has 18 decimals like ETH, 
+                    💡 <strong>Technical Details:</strong> The backend is treating USDC (6 decimals) as if it has 18 decimals like ETH,
                     causing a 10^12 precision error in balance detection. Your wallet shows 0.22202 USDC but the API reads it as ~0.000000000000222028 USDC.
                   </p>
                 </div>
@@ -759,8 +758,8 @@ function SignalCard({
             </div>
             <div>
               <h3 className="text-xl font-bold text-white bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-              {sd.token || signal.coin || "Unknown"}
-            </h3>
+                {sd.token || signal.coin || "Unknown"}
+              </h3>
               <p className="text-sm text-gray-400">Trading Signal</p>
             </div>
             {sd.signal && (
@@ -927,13 +926,13 @@ export default function SignalsFeed() {
       hash: txHash as `0x${string}`,
     });
 
-    // --- Swap Handlers ---
+  // --- Swap Handlers ---
   const handleTradeClick = useCallback((signal: Signal) => {
     console.log('🚀 Opening amount input modal for signal:', signal._id);
 
     if (!isConnected) {
       console.log('❌ Wallet not connected, showing connection prompt');
-    setShowToast(true);
+      setShowToast(true);
       return;
     }
 
@@ -988,11 +987,10 @@ export default function SignalsFeed() {
     console.log('  • This is a 12-decimal precision error (10^12 difference)');
 
     // Try different instruction formats to work around backend issues
-    let instruction;
-    let formatAttempt = 'decimal';
+    const formatAttempt = 'decimal';
 
     // First attempt: Standard decimal format
-    instruction = `Swap ${cleanAmount} USDC to ${tokenName} token from Arbitrum to Arbitrum`;
+    const instruction = `Swap ${cleanAmount} USDC to ${tokenName} token from Arbitrum to Arbitrum`;
     console.log('📝 Generated swap instruction:', instruction);
     console.log('👤 User address:', address);
 
@@ -1238,12 +1236,12 @@ export default function SignalsFeed() {
   const handleWorkaroundRetry = useCallback(() => {
     // Find the signal that was being processed when the error occurred
     const lastSignal = selectedSignal || (signals && signals.length > 0 ? signals[0] : null);
-    
+
     if (!lastSignal) {
       console.error('❌ No signal available for workaround retry');
       return;
     }
-    
+
     console.log('🔧 Attempting workaround with minimal amount for signal:', lastSignal._id);
     setSwapError(null);
     setSelectedSignal(lastSignal);
@@ -1372,14 +1370,14 @@ export default function SignalsFeed() {
       </div>
 
       <div className="relative z-10">
-              <Toast
+        <Toast
           message={
             swapError || (
               !isConnected
                 ? "Please connect your wallet first!"
                 : chainId !== arbitrum.id
-                ? "Please switch to Arbitrum network!"
-                : "Trading feature coming soon! 🚀"
+                  ? "Please switch to Arbitrum network!"
+                  : "Trading feature coming soon! 🚀"
             )
           }
           show={showToast}
@@ -1388,8 +1386,8 @@ export default function SignalsFeed() {
 
         {/* Swap Error Display */}
         {swapError && (
-          <ErrorDisplay 
-            error={swapError} 
+          <ErrorDisplay
+            error={swapError}
             onClose={handleErrorClose}
             onRetryWorkaround={swapError.includes('Backend Balance Detection Issue') ? handleWorkaroundRetry : undefined}
           />
@@ -1397,255 +1395,254 @@ export default function SignalsFeed() {
 
         {/* Wallet Connection Banner */}
         {(!isConnected || chainId !== arbitrum.id) && (
-        <div className="max-w-2xl mx-auto mb-4">
-          <div className="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-blue-900/20 dark:via-indigo-900/20 dark:to-purple-900/20 border border-blue-200 dark:border-blue-700 rounded-2xl p-6 shadow-lg">
-            <div className="text-center space-y-4">
-              <div className="flex justify-center">
-                <div className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-md ${
-                  !isConnected
-                    ? 'bg-gradient-to-br from-orange-400 to-red-500'
-                    : 'bg-gradient-to-br from-blue-400 to-indigo-500'
-                }`}>
+          <div className="max-w-2xl mx-auto mb-4">
+            <div className="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-blue-900/20 dark:via-indigo-900/20 dark:to-purple-900/20 border border-blue-200 dark:border-blue-700 rounded-2xl p-6 shadow-lg">
+              <div className="text-center space-y-4">
+                <div className="flex justify-center">
+                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-md ${!isConnected
+                      ? 'bg-gradient-to-br from-orange-400 to-red-500'
+                      : 'bg-gradient-to-br from-blue-400 to-indigo-500'
+                    }`}>
+                    {!isConnected ? (
+                      <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                      </svg>
+                    ) : (
+                      <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m0-4l4-4" />
+                      </svg>
+                    )}
+                  </div>
+                </div>
+
+                <div className="space-y-2">
                   {!isConnected ? (
-                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                    </svg>
+                    <>
+                      <h3 className="text-xl font-bold text-orange-800 dark:text-orange-200">
+                        🔐 Connect Your Wallet
+                      </h3>
+                      <p className="text-gray-600 dark:text-gray-300">
+                        Connect your MetaMask wallet to start trading signals on Arbitrum.
+                      </p>
+                    </>
                   ) : (
-                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m0-4l4-4" />
-                    </svg>
+                    <>
+                      <h3 className="text-xl font-bold text-blue-800 dark:text-blue-200">
+                        🌐 Switch to Arbitrum
+                      </h3>
+                      <p className="text-gray-600 dark:text-gray-300">
+                        Switch to Arbitrum network in your wallet to execute trades.
+                      </p>
+                    </>
                   )}
                 </div>
-              </div>
 
-              <div className="space-y-2">
                 {!isConnected ? (
-                  <>
-                    <h3 className="text-xl font-bold text-orange-800 dark:text-orange-200">
-                      🔐 Connect Your Wallet
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-300">
-                      Connect your MetaMask wallet to start trading signals on Arbitrum.
-                    </p>
-                  </>
+                  <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                    <button
+                      onClick={() => connect({ connector: connectors[2] })} // MetaMask connector
+                      className="px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200"
+                    >
+                      Connect MetaMask
+                    </button>
+                    <button
+                      onClick={() => connect({ connector: connectors[1] })} // Coinbase Wallet connector
+                      className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200"
+                    >
+                      Connect Coinbase
+                    </button>
+                  </div>
                 ) : (
-                  <>
-                    <h3 className="text-xl font-bold text-blue-800 dark:text-blue-200">
-                      🌐 Switch to Arbitrum
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-300">
-                      Switch to Arbitrum network in your wallet to execute trades.
-                    </p>
-                  </>
+                  <button
+                    onClick={() => switchChain({ chainId: arbitrum.id })}
+                    disabled={isChainSwitching}
+                    className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200 disabled:opacity-50"
+                  >
+                    {isChainSwitching ? 'Switching...' : 'Switch to Arbitrum'}
+                  </button>
                 )}
               </div>
-
-              {!isConnected ? (
-                <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                  <button
-                    onClick={() => connect({ connector: connectors[2] })} // MetaMask connector
-                    className="px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200"
-                  >
-                    Connect MetaMask
-                  </button>
-                  <button
-                    onClick={() => connect({ connector: connectors[1] })} // Coinbase Wallet connector
-                    className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200"
-                  >
-                    Connect Coinbase
-                  </button>
-                </div>
-              ) : (
-                <button
-                  onClick={() => switchChain({ chainId: arbitrum.id })}
-                  disabled={isChainSwitching}
-                  className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200 disabled:opacity-50"
-                >
-                  {isChainSwitching ? 'Switching...' : 'Switch to Arbitrum'}
-                </button>
-              )}
             </div>
           </div>
-        </div>
-      )}
+        )}
 
 
 
-      {/* Enhanced Transaction Success */}
-      {txHash && !isTxPending && (
-        <div className="max-w-2xl mx-auto mb-4 animate-in slide-in-from-bottom duration-500">
-          <div className="bg-gradient-to-br from-green-50/95 via-emerald-50/90 to-teal-50/80 dark:from-green-900/20 dark:via-emerald-900/25 dark:to-teal-900/30 backdrop-blur-xl rounded-2xl border border-green-200/50 dark:border-green-700/50 shadow-2xl p-6">
-            <div className="flex items-center space-x-4">
-              <div className="relative">
-                <div className="w-16 h-16 bg-gradient-to-br from-green-500 via-emerald-500 to-teal-500 rounded-2xl flex items-center justify-center shadow-xl">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <div className="absolute -top-1 -right-1 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
-                  <div className="w-2 h-2 bg-white rounded-full animate-ping"></div>
-                </div>
-                <div className="absolute -bottom-1 -left-1 w-4 h-4 bg-yellow-400 rounded-full flex items-center justify-center">
-                  <span className="text-xs text-yellow-900">🎉</span>
-                </div>
-              </div>
-              <div className="flex-1">
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 to-emerald-400 bg-clip-text text-transparent">
-                  🎉 Swap Successful!
-                </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Your transaction has been confirmed on the blockchain</p>
-                <div className="mt-3 flex items-center space-x-2">
-                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                  <span className="text-xs text-green-600 dark:text-green-400 font-medium">Transaction Confirmed</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Transaction Hash */}
-            <div className="mt-6 space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Transaction Hash</span>
-                <div className="flex items-center space-x-2">
-                  <CopyButton text={txHash} label="Copy" className="text-xs" />
-                  <a
-                    href={`https://arbiscan.io/tx/${txHash}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white text-xs font-medium rounded-md transition-colors duration-200"
-                  >
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                    </svg>
-                    View
-                  </a>
-                </div>
-              </div>
-              <div className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-lg p-3 border border-gray-200 dark:border-gray-700">
-                <p className="text-xs font-mono text-gray-600 dark:text-gray-400 break-all leading-relaxed">
-                  {txHash}
-                </p>
-              </div>
-            </div>
-
-            {/* Success Animation */}
-            <div className="mt-6 flex justify-center">
-              <div className="relative">
-                <div className="w-24 h-24 rounded-full bg-gradient-to-r from-green-400 to-emerald-500 opacity-20 animate-ping"></div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 flex items-center justify-center shadow-xl">
+        {/* Enhanced Transaction Success */}
+        {txHash && !isTxPending && (
+          <div className="max-w-2xl mx-auto mb-4 animate-in slide-in-from-bottom duration-500">
+            <div className="bg-gradient-to-br from-green-50/95 via-emerald-50/90 to-teal-50/80 dark:from-green-900/20 dark:via-emerald-900/25 dark:to-teal-900/30 backdrop-blur-xl rounded-2xl border border-green-200/50 dark:border-green-700/50 shadow-2xl p-6">
+              <div className="flex items-center space-x-4">
+                <div className="relative">
+                  <div className="w-16 h-16 bg-gradient-to-br from-green-500 via-emerald-500 to-teal-500 rounded-2xl flex items-center justify-center shadow-xl">
                     <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
+                  </div>
+                  <div className="absolute -top-1 -right-1 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+                    <div className="w-2 h-2 bg-white rounded-full animate-ping"></div>
+                  </div>
+                  <div className="absolute -bottom-1 -left-1 w-4 h-4 bg-yellow-400 rounded-full flex items-center justify-center">
+                    <span className="text-xs text-yellow-900">🎉</span>
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 to-emerald-400 bg-clip-text text-transparent">
+                    🎉 Swap Successful!
+                  </h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Your transaction has been confirmed on the blockchain</p>
+                  <div className="mt-3 flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <span className="text-xs text-green-600 dark:text-green-400 font-medium">Transaction Confirmed</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Transaction Hash */}
+              <div className="mt-6 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Transaction Hash</span>
+                  <div className="flex items-center space-x-2">
+                    <CopyButton text={txHash} label="Copy" className="text-xs" />
+                    <a
+                      href={`https://arbiscan.io/tx/${txHash}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white text-xs font-medium rounded-md transition-colors duration-200"
+                    >
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                      View
+                    </a>
+                  </div>
+                </div>
+                <div className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-lg p-3 border border-gray-200 dark:border-gray-700">
+                  <p className="text-xs font-mono text-gray-600 dark:text-gray-400 break-all leading-relaxed">
+                    {txHash}
+                  </p>
+                </div>
+              </div>
+
+              {/* Success Animation */}
+              <div className="mt-6 flex justify-center">
+                <div className="relative">
+                  <div className="w-24 h-24 rounded-full bg-gradient-to-r from-green-400 to-emerald-500 opacity-20 animate-ping"></div>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-16 h-16 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 flex items-center justify-center shadow-xl">
+                      <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Enhanced Swap Loading */}
-      {isSwapLoading && (
-        <div className="max-w-2xl mx-auto mb-4 animate-in slide-in-from-bottom duration-300">
-          <div className="bg-gradient-to-br from-blue-50/95 via-indigo-50/90 to-purple-50/80 dark:from-blue-900/20 dark:via-indigo-900/25 dark:to-purple-900/30 backdrop-blur-xl rounded-2xl border border-blue-200/50 dark:border-blue-700/50 shadow-2xl p-6">
-            <div className="flex items-center space-x-4">
-              <div className="relative">
-                <div className="w-14 h-14 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-xl">
-                  <div className="relative">
-                    <svg className="w-7 h-7 text-white animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        {/* Enhanced Swap Loading */}
+        {isSwapLoading && (
+          <div className="max-w-2xl mx-auto mb-4 animate-in slide-in-from-bottom duration-300">
+            <div className="bg-gradient-to-br from-blue-50/95 via-indigo-50/90 to-purple-50/80 dark:from-blue-900/20 dark:via-indigo-900/25 dark:to-purple-900/30 backdrop-blur-xl rounded-2xl border border-blue-200/50 dark:border-blue-700/50 shadow-2xl p-6">
+              <div className="flex items-center space-x-4">
+                <div className="relative">
+                  <div className="w-14 h-14 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-xl">
+                    <div className="relative">
+                      <svg className="w-7 h-7 text-white animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                      </svg>
+                      <div className="absolute inset-0 border-2 border-white/30 border-t-white rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }}></div>
+                    </div>
+                  </div>
+                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
+                    <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white to-gray-300 bg-clip-text text-transparent">
+                    🚀 Preparing Your Swap
+                  </h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Analyzing market data and generating optimal transaction route...</p>
+                  <div className="mt-3 flex items-center space-x-2">
+                    <div className="flex space-x-1">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                      <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                      <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                    </div>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">AI Agent Processing</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Progress Steps */}
+              <div className="mt-6 space-y-3">
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center shadow-md">
+                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-900 dark:text-white">✅ Wallet Connected</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">Ready for transaction</p>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center shadow-md animate-pulse">
+                    <svg className="w-4 h-4 text-white animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                     </svg>
-                    <div className="absolute inset-0 border-2 border-white/30 border-t-white rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }}></div>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-900 dark:text-white">🔄 Generating Route</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">Finding optimal swap path</p>
                   </div>
                 </div>
-                <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
-                  <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                </div>
-              </div>
-              <div className="flex-1">
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white to-gray-300 bg-clip-text text-transparent">
-                  🚀 Preparing Your Swap
-                </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Analyzing market data and generating optimal transaction route...</p>
-                <div className="mt-3 flex items-center space-x-2">
-                  <div className="flex space-x-1">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                <div className="flex items-center space-x-3 opacity-50">
+                  <div className="w-8 h-8 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center">
+                    <span className="text-xs text-gray-600 dark:text-gray-400">3</span>
                   </div>
-                  <span className="text-xs text-gray-500 dark:text-gray-400">AI Agent Processing</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Progress Steps */}
-            <div className="mt-6 space-y-3">
-              <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center shadow-md">
-                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-900 dark:text-white">✅ Wallet Connected</p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">Ready for transaction</p>
-                </div>
-              </div>
-              <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center shadow-md animate-pulse">
-                  <svg className="w-4 h-4 text-white animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                  </svg>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-900 dark:text-white">🔄 Generating Route</p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">Finding optimal swap path</p>
-                </div>
-              </div>
-              <div className="flex items-center space-x-3 opacity-50">
-                <div className="w-8 h-8 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center">
-                  <span className="text-xs text-gray-600 dark:text-gray-400">3</span>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400">⏳ Confirm Transaction</p>
-                  <p className="text-xs text-gray-400 dark:text-gray-500">Waiting for approval</p>
+                  <div>
+                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">⏳ Confirm Transaction</p>
+                    <p className="text-xs text-gray-400 dark:text-gray-500">Waiting for approval</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+        )}
+
+        <div className="space-y-4 max-w-2xl mx-auto px-4">
+          {signals.map((sig, index) => (
+            <SignalCard
+              key={sig._id}
+              signal={sig}
+              index={index}
+              onTradeClick={handleTradeClick}
+              pendingSwap={pendingSwap}
+              currentTxIndex={currentTxIndex}
+              onSwapApprove={handleSwapApprove}
+              onSwapReject={handleSwapReject}
+              isTxPending={isTxPending}
+              isSwapLoading={isSwapLoading}
+              processingSignalId={processingSignalId}
+            />
+          ))}
         </div>
-      )}
 
-      <div className="space-y-4 max-w-2xl mx-auto px-4">
-        {signals.map((sig, index) => (
-          <SignalCard
-            key={sig._id}
-            signal={sig}
-            index={index}
-            onTradeClick={handleTradeClick}
-            pendingSwap={pendingSwap}
-            currentTxIndex={currentTxIndex}
-            onSwapApprove={handleSwapApprove}
-            onSwapReject={handleSwapReject}
-            isTxPending={isTxPending}
-            isSwapLoading={isSwapLoading}
-            processingSignalId={processingSignalId}
+        {/* Amount Input Modal */}
+        {selectedSignal && (
+          <AmountInputModal
+            signal={selectedSignal}
+            isOpen={showAmountModal}
+            onClose={handleAmountCancel}
+            onConfirm={handleAmountConfirm}
+            usdcAmount={usdcAmount}
+            setUsdcAmount={setUsdcAmount}
+            isLoading={isSwapLoading}
           />
-        ))}
-      </div>
-
-      {/* Amount Input Modal */}
-      {selectedSignal && (
-        <AmountInputModal
-          signal={selectedSignal}
-          isOpen={showAmountModal}
-          onClose={handleAmountCancel}
-          onConfirm={handleAmountConfirm}
-          usdcAmount={usdcAmount}
-          setUsdcAmount={setUsdcAmount}
-          isLoading={isSwapLoading}
-        />
-      )}
+        )}
       </div>
     </div>
   );
