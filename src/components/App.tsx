@@ -100,18 +100,29 @@ export default function App(
         paddingRight: context?.client.safeAreaInsets?.right ?? 0,
       }}
     >
-      {/* Fixed Header */}
+      {/* Minimal Fixed Header */}
       <div className="sticky top-0 z-50 bg-gray-900/95 backdrop-blur-md border-b border-blue-500/30">
-        <div className="container py-4">
-          <div className="flex items-center justify-center">
-            <div className="flex items-center space-x-3">
-              {/* <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-blue-400 flex items-center justify-center">
-                <span className="text-lg">📊</span>
-              </div> */}
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-200 via-blue-400 to-blue-300 bg-clip-text text-transparent">
+        <div className="px-4 py-3">
+          <div className="flex items-center justify-between">
+            {/* Left: App Name with Gradient */}
+            <div className="flex items-center space-x-2">
+              <h1 className="text-lg font-bold bg-gradient-to-r from-blue-100 via-blue-400 to-blue-300 bg-clip-text text-transparent">
                 Maxxit Signals
               </h1>
             </div>
+
+            {/* Right: Truncated Wallet Address */}
+            {/* <div className="flex items-center">
+              {neynarUser ? (
+                <span className="text-sm text-gray-300 font-mono">
+                  {neynarUser.fid.toString().slice(0, 6)}...{neynarUser.fid.toString().slice(-4)}
+                </span>
+              ) : (
+                <span className="text-sm text-gray-500">
+                  Not Connected
+                </span>
+              )}
+            </div> */}
           </div>
         </div>
       </div>

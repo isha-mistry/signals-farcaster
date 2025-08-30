@@ -16,7 +16,7 @@ import SignalsFeed from "~/components/SignalsFeed";
  */
 export function HomeTab() {
   return (
-    <div className="px-2 sm:px-4 py-2">
+    <div className="py-2">
       <div className="max-w-md mx-auto">
         <SignalsFeed />
       </div>

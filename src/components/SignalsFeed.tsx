@@ -56,8 +56,8 @@ function CopyButton({ text, label = "Copy", className = "" }: CopyButtonProps) {
     <button
       onClick={handleCopy}
       className={`inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium transition-all duration-200 ${copied
-          ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400'
-          : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+        ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400'
+        : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
         } ${className}`}
     >
       {copied ? (
@@ -93,14 +93,14 @@ function Toast({ message, show, onClose }: { message: string; show: boolean; onC
   if (!show) return null;
 
   return (
-    <div className="fixed top-4 right-4 z-50 animate-fade-in-up">
-      <div className="bg-blue-500/90 backdrop-blur-sm border border-blue-400/30 rounded-lg px-4 py-3 shadow-lg">
-        <div className="flex items-center gap-3">
-          <div className="text-blue-400">🚀</div>
-          <div className="text-white font-medium">{message}</div>
+    <div className="fixed top-2 left-2 right-2 z-50 animate-fade-in-up sm:top-4 sm:right-4 sm:left-auto">
+      <div className="bg-blue-500/90 backdrop-blur-sm border border-blue-400/30 rounded-lg px-3 py-2 shadow-lg">
+        <div className="flex items-center gap-2">
+          <div className="text-blue-400 text-sm">🚀</div>
+          <div className="text-white font-medium text-sm flex-1">{message}</div>
           <button
             onClick={onClose}
-            className="text-blue-300 hover:text-white transition-colors ml-2"
+            className="text-blue-300 hover:text-white transition-colors ml-1 text-sm"
           >
             ✕
           </button>
@@ -250,46 +250,46 @@ function ErrorDisplay({
   onRetryWorkaround?: () => void;
 }) {
   return (
-    <div className="max-w-2xl mx-auto mb-4 animate-in slide-in-from-top duration-300">
-      <div className="bg-gradient-to-br from-red-50/95 via-red-50/90 to-pink-50/80 dark:from-red-900/20 dark:via-red-900/25 dark:to-pink-900/30 backdrop-blur-xl rounded-2xl border border-red-200/50 dark:border-red-700/50 shadow-2xl p-6">
-        <div className="flex items-start space-x-4">
+    <div className="max-w-full mx-auto mb-3 px-2 animate-in slide-in-from-top duration-300">
+      <div className="bg-gradient-to-br from-red-50/95 via-red-50/90 to-pink-50/80 dark:from-red-900/20 dark:via-red-900/25 dark:to-pink-900/30 backdrop-blur-xl rounded-xl border border-red-200/50 dark:border-red-700/50 shadow-xl p-4">
+        <div className="flex items-start space-x-3">
           <div className="flex-shrink-0">
-            <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-xl">
-              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-10 h-10 bg-gradient-to-br from-red-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg">
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
               </svg>
             </div>
           </div>
           <div className="flex-1">
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
+            <h3 className="text-base font-bold text-gray-900 dark:text-white mb-2">
               ⚠️ Swap Error
             </h3>
-            <div className="text-sm text-red-700 dark:text-red-300 leading-relaxed">
+            <div className="text-xs text-red-700 dark:text-red-300 leading-relaxed">
               {error.split('\n').map((line, index) => (
-                <div key={index} className={line.startsWith('•') ? 'ml-2' : line.startsWith('🔧') ? 'mt-3 font-semibold' : ''}>
+                <div key={index} className={line.startsWith('•') ? 'ml-2' : line.startsWith('🔧') ? 'mt-2 font-semibold' : ''}>
                   {line}
                 </div>
               ))}
             </div>
             {error.includes('Backend Balance Detection Issue') && (
-              <div className="mt-4 space-y-3">
-                <div className="p-3 bg-blue-50/50 dark:bg-blue-900/20 rounded-lg border border-blue-200/50 dark:border-blue-700/50">
+              <div className="mt-3 space-y-2">
+                <div className="p-2 bg-blue-50/50 dark:bg-blue-900/20 rounded-lg border border-blue-200/50 dark:border-blue-700/50">
                   <p className="text-xs text-blue-700 dark:text-blue-300">
                     💡 <strong>Technical Details:</strong> The backend is treating USDC (6 decimals) as if it has 18 decimals like ETH,
                     causing a 10^12 precision error in balance detection. Your wallet shows 0.22202 USDC but the API reads it as ~0.000000000000222028 USDC.
                   </p>
                 </div>
                 {onRetryWorkaround && (
-                  <div className="flex gap-2">
+                  <div className="flex flex-col gap-2">
                     <button
                       onClick={onRetryWorkaround}
-                      className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white text-sm font-medium rounded-lg transition-colors duration-200"
+                      className="px-3 py-2 bg-amber-500 hover:bg-amber-600 text-white text-xs font-medium rounded-lg transition-colors duration-200"
                     >
                       🔧 Try Workaround (0.001 USDC)
                     </button>
                     <button
                       onClick={onClose}
-                      className="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white text-sm font-medium rounded-lg transition-colors duration-200"
+                      className="px-3 py-2 bg-gray-500 hover:bg-gray-600 text-white text-xs font-medium rounded-lg transition-colors duration-200"
                     >
                       Dismiss
                     </button>
@@ -300,7 +300,7 @@ function ErrorDisplay({
           </div>
           <button
             onClick={onClose}
-            className="flex-shrink-0 p-2 hover:bg-red-100 dark:hover:bg-red-800 rounded-lg transition-colors"
+            className="flex-shrink-0 p-1 hover:bg-red-100 dark:hover:bg-red-800 rounded-lg transition-colors"
           >
             <svg className="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -379,28 +379,28 @@ function AmountInputModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-      <div className="w-full max-w-md bg-gradient-to-br from-white/95 via-gray-50/90 to-blue-50/80 dark:from-gray-900/95 dark:via-gray-800/90 dark:to-blue-900/80 backdrop-blur-xl rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-2xl p-6">
-        <div className="flex items-center justify-between mb-6">
-          <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 bg-black/50 backdrop-blur-sm">
+      <div className="w-full max-w-sm bg-gradient-to-br from-gray-900/95 via-gray-800/90 to-blue-900/80 backdrop-blur-xl rounded-xl border border-gray-700/50 shadow-xl p-4">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-bold text-white">
             💱 Swap USDC to {tokenName}
           </h3>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+            className="p-1 hover:bg-gray-700 rounded-lg transition-colors"
           >
-            <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-xs font-medium text-gray-300 mb-2">
               USDC Amount to Swap
-              <span className="text-xs text-gray-500 dark:text-gray-400 font-normal ml-2">
-                (Minimum: 0.001 USDC)
+              <span className="text-xs text-gray-400 font-normal ml-2">
+                (Min: 0.001)
               </span>
             </label>
             <div className="relative">
@@ -410,43 +410,43 @@ function AmountInputModal({
                 value={usdcAmount}
                 onChange={(e) => setUsdcAmount(e.target.value)}
                 placeholder="0.001"
-                className="w-full px-4 py-3 pr-12 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                className="w-full px-3 py-2 pr-12 border border-gray-600 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 text-sm"
                 required
                 min="0.001"
                 autoFocus
               />
-              <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-sm font-medium text-gray-500 dark:text-gray-400">
+              <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs font-medium text-gray-400">
                 USDC
               </div>
             </div>
           </div>
 
           {/* Amount Breakdown */}
-          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg p-4 border border-blue-200/50 dark:border-blue-700/50">
-            <div className="space-y-3">
+          <div className="bg-gradient-to-r from-blue-900/20 to-indigo-900/20 rounded-lg p-3 border border-blue-700/50">
+            <div className="space-y-2">
               {/* USDC Amount Breakdown */}
-              <div className="border-b border-gray-200 dark:border-gray-700 pb-2">
-                <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">USDC Amount</h4>
+              <div className="border-b border-gray-700 pb-2">
+                <h4 className="text-xs font-semibold text-gray-300 mb-1">USDC Amount</h4>
                 <div className="space-y-1">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600 dark:text-gray-400">You entered:</span>
-                    <span className="font-semibold text-gray-900 dark:text-white">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-gray-400">You entered:</span>
+                    <span className="font-semibold text-white">
                       {usdcAmount || '0'} USDC
                     </span>
                   </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600 dark:text-gray-400">Wei equivalent:</span>
-                    <span className="font-mono text-xs text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-gray-400">Wei equivalent:</span>
+                    <span className="font-mono text-xs text-white bg-gray-800 px-1 py-0.5 rounded">
                       {usdcAmount ? (parseFloat(usdcAmount) * Math.pow(10, 6)).toLocaleString() : '0'}
                     </span>
                   </div>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600 dark:text-gray-400">Sent to API:</span>
-                    <span className="font-mono text-xs text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 px-2 py-1 rounded">
-                      {(usdcAmount ? (parseFloat(usdcAmount) * Math.pow(10, 6)).toLocaleString() : '0')} (wei format)
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-gray-400">Sent to API:</span>
+                    <span className="font-mono text-xs text-green-400 bg-green-900/20 px-1 py-0.5 rounded">
+                      {(usdcAmount ? (parseFloat(usdcAmount) * Math.pow(10, 6)).toLocaleString() : '0')} (wei)
                     </span>
                   </div>
-                  <p className="text-xs text-blue-600 dark:text-blue-400">
+                  <p className="text-xs text-blue-400">
                     USDC uses 6 decimal places
                   </p>
                 </div>
@@ -454,41 +454,41 @@ function AmountInputModal({
 
               {/* Target Token Estimation */}
               <div>
-                <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Estimated {tokenName} Output</h4>
+                <h4 className="text-xs font-semibold text-gray-300 mb-1">Estimated {tokenName} Output</h4>
                 <div className="space-y-1">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600 dark:text-gray-400">You will receive:</span>
-                    <span className="font-semibold text-gray-900 dark:text-white">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-gray-400">You will receive:</span>
+                    <span className="font-semibold text-white">
                       ~{usdcAmount ? (parseFloat(usdcAmount) * 1.5).toFixed(Math.min(6, targetTokenDecimals)) : '0.000000'} {tokenName}
                     </span>
                   </div>
-                  <p className="text-xs text-purple-600 dark:text-purple-400">
+                  <p className="text-xs text-purple-400">
                     {tokenName} uses {targetTokenDecimals} decimal places
                   </p>
                 </div>
               </div>
 
-              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700/50 rounded p-2">
-                <p className="text-xs text-blue-700 dark:text-blue-300">
+              <div className="bg-blue-900/20 border border-blue-700/50 rounded p-2">
+                <p className="text-xs text-blue-300">
                   ℹ️ <strong>Note:</strong> We're sending the amount in wei format (6 decimals for USDC) to prevent decimal misinterpretation by the backend.
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-3">
+          <div className="flex flex-col gap-2">
             <button
               type="button"
               onClick={onClose}
               disabled={isLoading}
-              className="flex-1 px-6 py-3 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-medium rounded-xl transition-all duration-200 disabled:opacity-50"
+              className="w-full px-4 py-2 bg-gray-700 hover:bg-gray-600 text-gray-200 font-medium rounded-lg transition-all duration-200 disabled:opacity-50 text-sm"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={!usdcAmount || parseFloat(usdcAmount) < 0.001 || isLoading}
-              className="flex-1 px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 disabled:opacity-50 disabled:transform-none disabled:cursor-not-allowed"
+              className="w-full px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 disabled:opacity-50 disabled:transform-none disabled:cursor-not-allowed text-sm"
             >
               {isLoading ? (
                 <div className="flex items-center justify-center space-x-2">
@@ -529,35 +529,35 @@ function SwapTransactionPreview({
   const currentStepType = currentTxIndex === 0 ? 'Approval' : 'Swap';
 
   return (
-    <div className="mt-6 animate-in slide-in-from-top duration-500">
-      <div className="bg-gradient-to-br from-slate-50/95 via-white/90 to-blue-50/80 dark:from-slate-900/95 dark:via-slate-800/90 dark:to-blue-900/80 backdrop-blur-xl rounded-2xl border border-slate-200/50 dark:border-slate-700/50 shadow-2xl p-6">
+    <div className="mt-4 animate-in slide-in-from-top duration-500">
+      <div className="bg-gradient-to-br from-slate-50/95 via-white/90 to-blue-50/80 dark:from-slate-900/95 dark:via-slate-800/90 dark:to-blue-900/80 backdrop-blur-xl rounded-xl border border-slate-200/50 dark:border-slate-700/50 shadow-xl p-4">
         {/* Header with Progress */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center space-x-4">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center space-x-3">
             <div className="relative">
-              <div className="w-14 h-14 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-xl">
-                <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
                 </svg>
               </div>
-              <div className="absolute -top-1 -right-1 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
-                <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+              <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
+                <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div>
               </div>
             </div>
             <div>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white to-gray-300 bg-clip-text text-transparent">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white to-gray-300 bg-clip-text text-transparent">
                 Swap Transaction
               </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Step {currentTxIndex + 1} of {swapData.txPlan.length}: {currentStepType}</p>
+              <p className="text-xs text-gray-600 dark:text-gray-400">Step {currentTxIndex + 1} of {swapData.txPlan.length}: {currentStepType}</p>
             </div>
           </div>
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-2">
             <div className="text-right">
               <div className="text-xs text-gray-500 dark:text-gray-400">Progress</div>
               <div className="text-sm font-bold text-gray-900 dark:text-white">{Math.round(progress)}%</div>
             </div>
-            <div className="w-12 h-12 relative">
-              <svg className="w-12 h-12 transform -rotate-90" viewBox="0 0 36 36">
+            <div className="w-10 h-10 relative">
+              <svg className="w-10 h-10 transform -rotate-90" viewBox="0 0 36 36">
                 <path
                   d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                   fill="none"
@@ -575,7 +575,7 @@ function SwapTransactionPreview({
         </div>
 
         {/* Progress Bar */}
-        <div className="mb-6">
+        <div className="mb-4">
           <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mb-2">
             <span>{currentStepType}</span>
             <span>{currentTxIndex + 1} / {swapData.txPlan.length}</span>
@@ -589,19 +589,19 @@ function SwapTransactionPreview({
         </div>
 
         {/* Transaction Details */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <div className="bg-gradient-to-br from-white/80 to-gray-50/80 dark:from-gray-800/80 dark:to-gray-900/80 rounded-xl p-5 border border-gray-200/50 dark:border-gray-700/50 shadow-lg backdrop-blur-sm">
-            <div className="space-y-4">
+        <div className="grid grid-cols-1 gap-3 mb-4">
+          <div className="bg-gradient-to-br from-white/80 to-gray-50/80 dark:from-gray-800/80 dark:to-gray-900/80 rounded-lg p-3 border border-gray-200/50 dark:border-gray-700/50 shadow-md backdrop-blur-sm">
+            <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-gray-600 dark:text-gray-400">Action</span>
-                <span className="px-3 py-1 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-xs font-bold rounded-full shadow-md">
+                <span className="text-xs font-medium text-gray-600 dark:text-gray-400">Action</span>
+                <span className="px-2 py-1 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-xs font-bold rounded-full shadow-md">
                   {swapData.action}
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-gray-600 dark:text-gray-400">Target Token</span>
-                <span className="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                  <div className="w-5 h-5 bg-gradient-to-br from-orange-400 to-red-500 rounded-full flex items-center justify-center text-xs text-white font-bold">
+                <span className="text-xs font-medium text-gray-600 dark:text-gray-400">Target Token</span>
+                <span className="text-xs font-bold text-gray-900 dark:text-white flex items-center gap-1">
+                  <div className="w-4 h-4 bg-gradient-to-br from-orange-400 to-red-500 rounded-full flex items-center justify-center text-xs text-white font-bold">
                     {swapData.tokenName.slice(0, 1)}
                   </div>
                   {swapData.tokenName}
@@ -613,12 +613,12 @@ function SwapTransactionPreview({
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-white/80 to-gray-50/80 dark:from-gray-800/80 dark:to-gray-900/80 rounded-xl p-5 border border-gray-200/50 dark:border-gray-700/50 shadow-lg backdrop-blur-sm">
-            <div className="space-y-4">
+          <div className="bg-gradient-to-br from-white/80 to-gray-50/80 dark:from-gray-800/80 dark:to-gray-900/80 rounded-lg p-3 border border-gray-200/50 dark:border-gray-700/50 shadow-md backdrop-blur-sm">
+            <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-gray-600 dark:text-gray-400">Amount</span>
+                <span className="text-xs font-medium text-gray-600 dark:text-gray-400">Amount</span>
                 <div className="text-right">
-                  <div className="text-sm font-bold text-gray-900 dark:text-white">
+                  <div className="text-xs font-bold text-gray-900 dark:text-white">
                     {formatUSDC(swapData.amount).readable} USDC
                   </div>
                   <div className="text-xs font-mono text-gray-500 dark:text-gray-400">
@@ -627,8 +627,8 @@ function SwapTransactionPreview({
                 </div>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-gray-600 dark:text-gray-400">Network</span>
-                <span className="px-3 py-1 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-xs font-bold rounded-full shadow-md">
+                <span className="text-xs font-medium text-gray-600 dark:text-gray-400">Network</span>
+                <span className="px-2 py-1 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-xs font-bold rounded-full shadow-md">
                   Arbitrum
                 </span>
               </div>
@@ -637,30 +637,30 @@ function SwapTransactionPreview({
         </div>
 
         {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-3">
+        <div className="flex flex-col gap-2">
           <button
             onClick={onApprove}
             disabled={isLoading}
-            className="flex-1 bg-gradient-to-r from-green-500 via-green-600 to-emerald-600 hover:from-green-600 hover:via-green-700 hover:to-emerald-700 text-white font-bold py-4 px-6 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 disabled:opacity-50 disabled:transform-none group"
+            className="w-full bg-gradient-to-r from-green-500 via-green-600 to-emerald-600 hover:from-green-600 hover:via-green-700 hover:to-emerald-700 text-white font-bold py-3 px-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 disabled:opacity-50 disabled:transform-none group"
           >
             {isLoading ? (
-              <div className="flex items-center justify-center space-x-3">
+              <div className="flex items-center justify-center space-x-2">
                 <div className="relative">
-                  <div className="w-5 h-5 border-3 border-white border-t-transparent rounded-full animate-spin"></div>
-                  <div className="absolute inset-0 w-5 h-5 border-3 border-white/30 border-t-transparent rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1s' }}></div>
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  <div className="absolute inset-0 w-4 h-4 border-2 border-white/30 border-t-transparent rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1s' }}></div>
                 </div>
-                <span className="text-sm font-bold">Processing Transaction...</span>
+                <span className="text-xs font-bold">Processing Transaction...</span>
               </div>
             ) : (
-              <div className="flex items-center justify-center space-x-3">
+              <div className="flex items-center justify-center space-x-2">
                 <div className="relative">
-                  <svg className="w-5 h-5 group-hover:animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 group-hover:animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
-                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full animate-ping"></div>
+                  <div className="absolute -top-1 -right-1 w-1.5 h-1.5 bg-white rounded-full animate-ping"></div>
                 </div>
-                <span className="text-sm font-bold">Approve & Sign</span>
-                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <span className="text-xs font-bold">Approve & Sign</span>
+                <svg className="w-3 h-3 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </div>
@@ -669,13 +669,13 @@ function SwapTransactionPreview({
           <button
             onClick={onReject}
             disabled={isLoading}
-            className="flex-1 bg-gradient-to-r from-red-500 via-red-600 to-red-700 hover:from-red-600 hover:via-red-700 hover:to-red-800 text-white font-bold py-4 px-6 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 disabled:opacity-50 disabled:transform-none"
+            className="w-full bg-gradient-to-r from-red-500 via-red-600 to-red-700 hover:from-red-600 hover:via-red-700 hover:to-red-800 text-white font-bold py-3 px-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 disabled:opacity-50 disabled:transform-none"
           >
-            <div className="flex items-center justify-center space-x-3">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="flex items-center justify-center space-x-2">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
-              <span className="text-sm font-bold">Cancel Swap</span>
+              <span className="text-xs font-bold">Cancel Swap</span>
             </div>
           </button>
         </div>
@@ -739,32 +739,32 @@ function SignalCard({
 
   return (
     <div
-      className="signal-card animate-fade-in-up max-w-2xl mx-auto"
+      className="signal-card animate-fade-in-up max-w-full mx-auto"
       style={{ animationDelay: `${index * 0.05}s` }}
     >
-      <div className="p-4">
+      <div className="p-3">
         {/* Enhanced Header with Gradient */}
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-3">
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-2">
             <div className="relative">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-                <span className="text-white font-bold text-sm">
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg">
+                <span className="text-white font-bold text-xs">
                   {sd.token ? sd.token.slice(0, 2).toUpperCase() : "💎"}
                 </span>
               </div>
-              <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
-                <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full flex items-center justify-center">
+                <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div>
               </div>
             </div>
             <div>
-              <h3 className="text-xl font-bold text-white bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+              <h3 className="text-base font-bold text-white bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
                 {sd.token || signal.coin || "Unknown"}
               </h3>
-              <p className="text-sm text-gray-400">Trading Signal</p>
+              <p className="text-xs text-gray-400">Trading Signal</p>
             </div>
             {sd.signal && (
               <span className={classNames(
-                "px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide border-2 shadow-lg",
+                "px-2 py-1 rounded-lg text-[0.60rem] font-bold uppercase tracking-wide border shadow-lg",
                 isBuy ? "bg-gradient-to-r from-green-500 to-emerald-600 text-white border-green-400/50" :
                   isSell ? "bg-gradient-to-r from-red-500 to-red-600 text-white border-red-400/50" :
                     "bg-gradient-to-r from-gray-500 to-gray-600 text-white border-gray-400/50"
@@ -775,7 +775,7 @@ function SignalCard({
           </div>
           <div className="text-right">
             <div className={classNames(
-              "text-lg font-bold",
+              "text-base font-bold",
               pnl.isProfit ? "text-green-400" : "text-red-400"
             )}>
               {pnl.percentage > 0 ? "+" : ""}{pnl.percentage.toFixed(2)}%
@@ -785,31 +785,31 @@ function SignalCard({
         </div>
 
         {/* Enhanced Metrics with Glassmorphism */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
-          <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-xl p-4 border border-gray-700/50 shadow-xl">
-            <div className="text-xs text-gray-400 mb-2 font-medium">Current Price</div>
-            <div className="text-lg font-bold text-white">
+        <div className="grid grid-cols-2 gap-2 mb-3">
+          <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-lg p-3 border border-gray-700/50 shadow-lg">
+            <div className="text-xs text-gray-400 mb-1 font-medium">Current Price</div>
+            <div className="text-sm font-bold text-white">
               {formatCurrency(sd.currentPrice)}
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-xl p-4 border border-gray-700/50 shadow-xl">
-            <div className="text-xs text-gray-400 mb-2 font-medium">Entry Price</div>
-            <div className="text-lg font-bold text-white">
+          <div className="bg-gradient-to-br from-gray-800/60 to-gray-900/60 backdrop-blur-sm rounded-lg p-3 border border-gray-700/50 shadow-lg">
+            <div className="text-xs text-gray-400 mb-1 font-medium">Entry Price</div>
+            <div className="text-sm font-bold text-white">
               {formatCurrency(sd.priceAtTweet)}
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-red-900/40 to-red-800/40 backdrop-blur-sm rounded-xl p-4 border border-red-500/30 shadow-xl">
-            <div className="text-xs text-red-400 mb-2 font-medium">Stop Loss</div>
-            <div className="text-lg font-bold text-white">
+          <div className="bg-gradient-to-br from-red-900/40 to-red-800/40 backdrop-blur-sm rounded-lg p-3 border border-red-500/30 shadow-lg">
+            <div className="text-xs text-red-400 mb-1 font-medium">Stop Loss</div>
+            <div className="text-sm font-bold text-white">
               {formatCurrency(sd.stopLoss)}
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-blue-900/40 to-blue-800/40 backdrop-blur-sm rounded-xl p-4 border border-blue-500/30 shadow-xl">
-            <div className="text-xs text-blue-400 mb-2 font-medium">Timeline</div>
-            <div className="text-sm font-bold text-white">
+          <div className="bg-gradient-to-br from-blue-900/40 to-blue-800/40 backdrop-blur-sm rounded-lg p-3 border border-blue-500/30 shadow-lg">
+            <div className="text-xs text-blue-400 mb-1 font-medium">Timeline</div>
+            <div className="text-xs font-bold text-white">
               {sd.timeline || "N/A"}
             </div>
           </div>
@@ -817,16 +817,16 @@ function SignalCard({
 
         {/* Enhanced Targets */}
         {(sd.targets || []).length > 0 && (
-          <div className="mb-4">
-            <div className="text-sm text-gray-400 mb-3 font-semibold flex items-center gap-2">
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+          <div className="mb-3">
+            <div className="text-xs text-gray-400 mb-2 font-semibold flex items-center gap-2">
+              <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
               Price Targets
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5">
               {sd.targets!.map((target, i) => (
                 <span
                   key={i}
-                  className="inline-flex items-center rounded-lg bg-gradient-to-r from-green-500/20 to-emerald-500/20 text-green-400 border border-green-500/30 px-3 py-2 text-sm font-semibold shadow-lg backdrop-blur-sm"
+                  className="inline-flex items-center rounded-md bg-gradient-to-r from-green-500/20 to-emerald-500/20 text-green-400 border border-green-500/30 px-2 py-1.5 text-xs font-semibold shadow-md backdrop-blur-sm"
                 >
                   🎯 TP{i + 1}: {formatCurrency(target)}
                 </span>
@@ -837,35 +837,35 @@ function SignalCard({
 
         {/* Enhanced Trade Tip */}
         {sd.tradeTip && (
-          <div className="bg-gradient-to-br from-blue-900/30 to-blue-800/30 border border-blue-500/30 rounded-xl p-4 mb-4 shadow-xl backdrop-blur-sm">
-            <div className="text-sm text-blue-400 font-semibold mb-2 flex items-center gap-2">
+          <div className="bg-gradient-to-br from-blue-900/30 to-blue-800/30 border border-blue-500/30 rounded-lg p-3 mb-3 shadow-lg backdrop-blur-sm">
+            <div className="text-xs text-blue-400 font-semibold mb-2 flex items-center gap-2">
               💡 Trade Insight
             </div>
-            <div className="text-sm text-gray-300 leading-relaxed">{sd.tradeTip}</div>
+            <div className="text-xs text-gray-300 leading-relaxed">{sd.tradeTip}</div>
           </div>
         )}
 
         {/* Enhanced Trade Button */}
         {isBuy && (
-          <div className="mt-6 pt-4 border-t border-gray-700/50">
+          <div className="mt-4 pt-3 border-t border-gray-700/50">
             <button
               onClick={() => onTradeClick(signal)}
               disabled={isThisSignalProcessing}
-              className="w-full bg-gradient-to-r from-green-600 via-green-500 to-emerald-600 hover:from-green-500 hover:via-green-400 hover:to-emerald-500 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-2xl shadow-green-500/30 flex items-center justify-center gap-3 group disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-gradient-to-r from-green-600 via-green-500 to-emerald-600 hover:from-green-500 hover:via-green-400 hover:to-emerald-500 text-white font-bold py-3 px-4 rounded-lg transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-green-500/30 flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isThisSignalProcessing ? (
                 <>
-                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                  <span className="text-lg font-bold">Preparing Swap...</span>
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  <span className="text-base font-bold">Preparing Swap...</span>
                 </>
               ) : (
                 <>
                   <div className="relative">
-                    <span className="text-xl group-hover:animate-bounce">🚀</span>
-                    <div className="absolute -top-1 -right-1 w-2 h-2 bg-white rounded-full animate-ping"></div>
+                    <span className="text-lg group-hover:animate-bounce">🚀</span>
+                    <div className="absolute -top-1 -right-1 w-1.5 h-1.5 bg-white rounded-full animate-ping"></div>
                   </div>
-                  <span className="text-lg font-bold">Execute Swap</span>
-                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <span className="text-base font-bold">Execute Swap</span>
+                  <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </svg>
                 </>
@@ -1307,27 +1307,27 @@ export default function SignalsFeed() {
 
   if (loading) {
     return (
-      <div className="space-y-3 max-w-2xl mx-auto">
+      <div className="space-y-2 max-w-full mx-auto px-2">
         {[...Array(4)].map((_, i) => (
           <div
             key={i}
             className="signal-card animate-pulse"
             style={{ animationDelay: `${i * 0.05}s` }}
           >
-            <div className="p-4">
-              <div className="flex justify-between items-center mb-3">
-                <div className="h-5 w-24 bg-gray-700 rounded" />
-                <div className="h-4 w-16 bg-gray-700 rounded" />
+            <div className="p-3">
+              <div className="flex justify-between items-center mb-2">
+                <div className="h-4 w-20 bg-gray-700 rounded" />
+                <div className="h-3 w-12 bg-gray-700 rounded" />
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-3">
-                <div className="h-14 bg-gray-700 rounded-lg" />
-                <div className="h-14 bg-gray-700 rounded-lg" />
-                <div className="h-14 bg-gray-700 rounded-lg" />
-                <div className="h-14 bg-gray-700 rounded-lg" />
+              <div className="grid grid-cols-2 gap-2 mb-2">
+                <div className="h-10 bg-gray-700 rounded-lg" />
+                <div className="h-10 bg-gray-700 rounded-lg" />
+                <div className="h-10 bg-gray-700 rounded-lg" />
+                <div className="h-10 bg-gray-700 rounded-lg" />
               </div>
               <div className="flex gap-2">
-                <div className="h-6 w-16 bg-gray-700 rounded" />
-                <div className="h-6 w-20 bg-gray-700 rounded" />
+                <div className="h-5 w-12 bg-gray-700 rounded" />
+                <div className="h-5 w-16 bg-gray-700 rounded" />
               </div>
             </div>
           </div>
@@ -1338,11 +1338,11 @@ export default function SignalsFeed() {
 
   if (error) {
     return (
-      <div className="signal-card border-red-500/50 bg-red-500/5 animate-fade-in-up max-w-2xl mx-auto">
-        <div className="p-6 text-center">
-          <div className="text-red-400 text-4xl mb-3">⚠️</div>
-          <h3 className="text-lg font-semibold text-white mb-2">Error Loading Signals</h3>
-          <p className="text-gray-300">{error}</p>
+      <div className="signal-card border-red-500/50 bg-red-500/5 animate-fade-in-up max-w-full mx-auto px-2">
+        <div className="p-4 text-center">
+          <div className="text-red-400 text-2xl mb-2">⚠️</div>
+          <h3 className="text-base font-semibold text-white mb-2">Error Loading Signals</h3>
+          <p className="text-gray-300 text-sm">{error}</p>
         </div>
       </div>
     );
@@ -1350,24 +1350,24 @@ export default function SignalsFeed() {
 
   if (!signals || signals.length === 0) {
     return (
-      <div className="signal-card animate-fade-in-up max-w-2xl mx-auto">
-        <div className="p-6 text-center">
-          <div className="text-gray-400 text-4xl mb-3">📊</div>
-          <h3 className="text-lg font-semibold text-white mb-2">No Signals Available</h3>
-          <p className="text-gray-300">Check back later for new trading signals</p>
+      <div className="signal-card animate-fade-in-up max-w-full mx-auto px-2">
+        <div className="p-4 text-center">
+          <div className="text-gray-400 text-2xl mb-2">📊</div>
+          <h3 className="text-base font-semibold text-white mb-2">No Signals Available</h3>
+          <p className="text-gray-300 text-sm">Check back later for new trading signals</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/20 dark:from-slate-900 dark:via-slate-800 dark:to-indigo-900/10">
+    <div className="relative min-h-screen">
       {/* Animated Background Pattern */}
-      <div className="absolute inset-0 opacity-30 pointer-events-none">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_25%,rgba(59,130,246,0.05)_0%,transparent_50%)]"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_75%,rgba(168,85,247,0.05)_0%,transparent_50%)]"></div>
-        <div className="absolute inset-0 bg-[conic-gradient(from_0deg_at_50%_50%,rgba(59,130,246,0.03)_0deg,rgba(168,85,247,0.03)_120deg,rgba(236,72,153,0.03)_240deg,rgba(59,130,246,0.03)_360deg)]"></div>
-      </div>
+      {/* <div className="absolute inset-0 opacity-20 pointer-events-none">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_25%,rgba(59,130,246,0.03)_0%,transparent_50%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_75%,rgba(168,85,247,0.03)_0%,transparent_50%)]"></div>
+        <div className="absolute inset-0 bg-[conic-gradient(from_0deg_at_50%_50%,rgba(59,130,246,0.02)_0deg,rgba(168,85,247,0.02)_120deg,rgba(236,72,153,0.02)_240deg,rgba(59,130,246,0.02)_360deg)]"></div>
+      </div> */}
 
       <div className="relative z-10">
         <Toast
@@ -1395,42 +1395,42 @@ export default function SignalsFeed() {
 
         {/* Wallet Connection Banner */}
         {(!isConnected || chainId !== arbitrum.id) && (
-          <div className="max-w-2xl mx-auto mb-4">
-            <div className="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-blue-900/20 dark:via-indigo-900/20 dark:to-purple-900/20 border border-blue-200 dark:border-blue-700 rounded-2xl p-6 shadow-lg">
-              <div className="text-center space-y-4">
+          <div className="max-w-full mx-auto mb-3">
+            <div className="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-blue-900/20 dark:via-indigo-900/20 dark:to-purple-900/20 border border-blue-200 dark:border-blue-700 rounded-xl p-4 shadow-lg">
+              <div className="text-center space-y-3">
                 <div className="flex justify-center">
-                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-md ${!isConnected
-                      ? 'bg-gradient-to-br from-orange-400 to-red-500'
-                      : 'bg-gradient-to-br from-blue-400 to-indigo-500'
+                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center shadow-md ${!isConnected
+                    ? 'bg-gradient-to-br from-orange-400 to-red-500'
+                    : 'bg-gradient-to-br from-blue-400 to-indigo-500'
                     }`}>
                     {!isConnected ? (
-                      <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                       </svg>
                     ) : (
-                      <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m0-4l4-4" />
                       </svg>
                     )}
                   </div>
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-1">
                   {!isConnected ? (
                     <>
-                      <h3 className="text-xl font-bold text-orange-800 dark:text-orange-200">
+                      <h3 className="text-lg font-bold text-orange-800 dark:text-orange-200">
                         🔐 Connect Your Wallet
                       </h3>
-                      <p className="text-gray-600 dark:text-gray-300">
+                      <p className="text-gray-600 dark:text-gray-300 text-sm">
                         Connect your MetaMask wallet to start trading signals on Arbitrum.
                       </p>
                     </>
                   ) : (
                     <>
-                      <h3 className="text-xl font-bold text-blue-800 dark:text-blue-200">
+                      <h3 className="text-lg font-bold text-blue-800 dark:text-blue-200">
                         🌐 Switch to Arbitrum
                       </h3>
-                      <p className="text-gray-600 dark:text-gray-300">
+                      <p className="text-gray-600 dark:text-gray-300 text-sm">
                         Switch to Arbitrum network in your wallet to execute trades.
                       </p>
                     </>
@@ -1438,16 +1438,16 @@ export default function SignalsFeed() {
                 </div>
 
                 {!isConnected ? (
-                  <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <div className="flex flex-col gap-2 justify-center">
                     <button
                       onClick={() => connect({ connector: connectors[2] })} // MetaMask connector
-                      className="px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200"
+                      className="px-4 py-2 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-sm"
                     >
                       Connect MetaMask
                     </button>
                     <button
                       onClick={() => connect({ connector: connectors[1] })} // Coinbase Wallet connector
-                      className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200"
+                      className="px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-sm"
                     >
                       Connect Coinbase
                     </button>
@@ -1456,7 +1456,7 @@ export default function SignalsFeed() {
                   <button
                     onClick={() => switchChain({ chainId: arbitrum.id })}
                     disabled={isChainSwitching}
-                    className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200 disabled:opacity-50"
+                    className="px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 disabled:opacity-50 text-sm"
                   >
                     {isChainSwitching ? 'Switching...' : 'Switch to Arbitrum'}
                   </button>
@@ -1470,45 +1470,45 @@ export default function SignalsFeed() {
 
         {/* Enhanced Transaction Success */}
         {txHash && !isTxPending && (
-          <div className="max-w-2xl mx-auto mb-4 animate-in slide-in-from-bottom duration-500">
-            <div className="bg-gradient-to-br from-green-50/95 via-emerald-50/90 to-teal-50/80 dark:from-green-900/20 dark:via-emerald-900/25 dark:to-teal-900/30 backdrop-blur-xl rounded-2xl border border-green-200/50 dark:border-green-700/50 shadow-2xl p-6">
-              <div className="flex items-center space-x-4">
+          <div className="max-w-full mx-auto mb-3 animate-in slide-in-from-bottom duration-500">
+            <div className="bg-gradient-to-br from-green-50/95 via-emerald-50/90 to-teal-50/80 dark:from-green-900/20 dark:via-emerald-900/25 dark:to-teal-900/30 backdrop-blur-xl rounded-xl border border-green-200/50 dark:border-green-700/50 shadow-xl p-4">
+              <div className="flex items-center space-x-3">
                 <div className="relative">
-                  <div className="w-16 h-16 bg-gradient-to-br from-green-500 via-emerald-500 to-teal-500 rounded-2xl flex items-center justify-center shadow-xl">
-                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-12 h-12 bg-gradient-to-br from-green-500 via-emerald-500 to-teal-500 rounded-xl flex items-center justify-center shadow-lg">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
-                  <div className="absolute -top-1 -right-1 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
-                    <div className="w-2 h-2 bg-white rounded-full animate-ping"></div>
+                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
+                    <div className="w-1.5 h-1.5 bg-white rounded-full animate-ping"></div>
                   </div>
-                  <div className="absolute -bottom-1 -left-1 w-4 h-4 bg-yellow-400 rounded-full flex items-center justify-center">
+                  <div className="absolute -bottom-1 -left-1 w-3 h-3 bg-yellow-400 rounded-full flex items-center justify-center">
                     <span className="text-xs text-yellow-900">🎉</span>
                   </div>
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 to-emerald-400 bg-clip-text text-transparent">
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white bg-gradient-to-r from-green-600 to-emerald-600 dark:from-green-400 to-emerald-400 bg-clip-text text-transparent">
                     🎉 Swap Successful!
                   </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Your transaction has been confirmed on the blockchain</p>
-                  <div className="mt-3 flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                  <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">Your transaction has been confirmed on the blockchain</p>
+                  <div className="mt-2 flex items-center space-x-2">
+                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
                     <span className="text-xs text-green-600 dark:text-green-400 font-medium">Transaction Confirmed</span>
                   </div>
                 </div>
               </div>
 
               {/* Transaction Hash */}
-              <div className="mt-6 space-y-3">
+              <div className="mt-4 space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Transaction Hash</span>
+                  <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Transaction Hash</span>
                   <div className="flex items-center space-x-2">
                     <CopyButton text={txHash} label="Copy" className="text-xs" />
                     <a
                       href={`https://arbiscan.io/tx/${txHash}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white text-xs font-medium rounded-md transition-colors duration-200"
+                      className="inline-flex items-center gap-1 px-2 py-1 bg-blue-500 hover:bg-blue-600 text-white text-xs font-medium rounded-md transition-colors duration-200"
                     >
                       <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -1517,7 +1517,7 @@ export default function SignalsFeed() {
                     </a>
                   </div>
                 </div>
-                <div className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-lg p-3 border border-gray-200 dark:border-gray-700">
+                <div className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-lg p-2 border border-gray-200 dark:border-gray-700">
                   <p className="text-xs font-mono text-gray-600 dark:text-gray-400 break-all leading-relaxed">
                     {txHash}
                   </p>
@@ -1525,12 +1525,12 @@ export default function SignalsFeed() {
               </div>
 
               {/* Success Animation */}
-              <div className="mt-6 flex justify-center">
+              <div className="mt-4 flex justify-center">
                 <div className="relative">
-                  <div className="w-24 h-24 rounded-full bg-gradient-to-r from-green-400 to-emerald-500 opacity-20 animate-ping"></div>
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-r from-green-400 to-emerald-500 opacity-20 animate-ping"></div>
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-16 h-16 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 flex items-center justify-center shadow-xl">
-                      <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 flex items-center justify-center shadow-lg">
+                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                       </svg>
                     </div>
@@ -1543,32 +1543,32 @@ export default function SignalsFeed() {
 
         {/* Enhanced Swap Loading */}
         {isSwapLoading && (
-          <div className="max-w-2xl mx-auto mb-4 animate-in slide-in-from-bottom duration-300">
-            <div className="bg-gradient-to-br from-blue-50/95 via-indigo-50/90 to-purple-50/80 dark:from-blue-900/20 dark:via-indigo-900/25 dark:to-purple-900/30 backdrop-blur-xl rounded-2xl border border-blue-200/50 dark:border-blue-700/50 shadow-2xl p-6">
-              <div className="flex items-center space-x-4">
+          <div className="max-w-full mx-auto mb-3 animate-in slide-in-from-bottom duration-300">
+            <div className="bg-gradient-to-br from-blue-50/95 via-indigo-50/90 to-purple-50/80 dark:from-blue-900/20 dark:via-indigo-900/25 dark:to-purple-900/30 backdrop-blur-xl rounded-xl border border-blue-200/50 dark:border-blue-700/50 shadow-xl p-4">
+              <div className="flex items-center space-x-3">
                 <div className="relative">
-                  <div className="w-14 h-14 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-xl">
+                  <div className="w-12 h-12 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg">
                     <div className="relative">
-                      <svg className="w-7 h-7 text-white animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-6 h-6 text-white animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                       </svg>
                       <div className="absolute inset-0 border-2 border-white/30 border-t-white rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }}></div>
                     </div>
                   </div>
-                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
-                    <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full flex items-center justify-center">
+                    <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div>
                   </div>
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white to-gray-300 bg-clip-text text-transparent">
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white to-gray-300 bg-clip-text text-transparent">
                     🚀 Preparing Your Swap
                   </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Analyzing market data and generating optimal transaction route...</p>
-                  <div className="mt-3 flex items-center space-x-2">
+                  <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">Analyzing market data and generating optimal transaction route...</p>
+                  <div className="mt-2 flex items-center space-x-2">
                     <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                      <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                      <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                      <div className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                      <div className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                      <div className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
                     </div>
                     <span className="text-xs text-gray-500 dark:text-gray-400">AI Agent Processing</span>
                   </div>
@@ -1576,35 +1576,35 @@ export default function SignalsFeed() {
               </div>
 
               {/* Progress Steps */}
-              <div className="mt-6 space-y-3">
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center shadow-md">
-                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="mt-4 space-y-2">
+                <div className="flex items-center space-x-2">
+                  <div className="w-6 h-6 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center shadow-md">
+                    <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-900 dark:text-white">✅ Wallet Connected</p>
+                    <p className="text-xs font-medium text-gray-900 dark:text-white">✅ Wallet Connected</p>
                     <p className="text-xs text-gray-500 dark:text-gray-400">Ready for transaction</p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center shadow-md animate-pulse">
-                    <svg className="w-4 h-4 text-white animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="flex items-center space-x-2">
+                  <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center shadow-md animate-pulse">
+                    <svg className="w-3 h-3 text-white animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                     </svg>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-900 dark:text-white">🔄 Generating Route</p>
+                    <p className="text-xs font-medium text-gray-900 dark:text-white">🔄 Generating Route</p>
                     <p className="text-xs text-gray-500 dark:text-gray-400">Finding optimal swap path</p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-3 opacity-50">
-                  <div className="w-8 h-8 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center">
+                <div className="flex items-center space-x-2 opacity-50">
+                  <div className="w-6 h-6 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center">
                     <span className="text-xs text-gray-600 dark:text-gray-400">3</span>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">⏳ Confirm Transaction</p>
+                    <p className="text-xs font-medium text-gray-500 dark:text-gray-400">⏳ Confirm Transaction</p>
                     <p className="text-xs text-gray-400 dark:text-gray-500">Waiting for approval</p>
                   </div>
                 </div>
@@ -1613,7 +1613,7 @@ export default function SignalsFeed() {
           </div>
         )}
 
-        <div className="space-y-4 max-w-2xl mx-auto px-4">
+        <div className="space-y-3 max-w-full mx-auto">
           {signals.map((sig, index) => (
             <SignalCard
               key={sig._id}
